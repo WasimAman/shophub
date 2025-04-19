@@ -39,7 +39,7 @@ public class Product {
     private int discountPercent;
     private int quantity;
     private String imgUrl;
-    private int avgRating;
+    private double avgRating;
     private LocalDateTime createdAt;
 
     @ManyToOne

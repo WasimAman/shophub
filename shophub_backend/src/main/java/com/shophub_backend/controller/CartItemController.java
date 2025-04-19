@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shophub_backend.model.CartItems;
@@ -18,7 +19,7 @@ import com.shophub_backend.service.CartItemService;
 import com.shophub_backend.service.UserService;
 
 @RestController
-@RequestMapping("api/user/cart_item/")
+@RequestMapping("api/user/cart/")
 public class CartItemController {
 
     @Autowired
@@ -35,9 +36,9 @@ public class CartItemController {
     }
 
     @PutMapping("{cartItemId}")
-    public ResponseEntity<CartItems> updateCartItem(@PathVariable long cartItemId,@RequestHeader(JwtConstant.JWT_HEADER) String token,CartItems item){
+    public ResponseEntity<CartItems> updateCartItem(@PathVariable long cartItemId,@RequestParam int quantity,@RequestHeader(JwtConstant.JWT_HEADER) String token){
         User user = userService.findUserByToken(token);
-        CartItems updatedCartItems = cartItemService.updateCartItems(user.getId(), cartItemId, item);
+        CartItems updatedCartItems = cartItemService.updateCartItems(user.getId(), cartItemId,quantity);
         return ResponseEntity.status(HttpStatus.OK).body(updatedCartItems);
     }
 }
